@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Microsoft Sign-In Test</title>
+</head>
+<body>
+  <h1>Microsoft Sign-In Test</h1>
+  <button id="signin-btn">Sign in with Microsoft</button>
+
+  <script>
+    const CLIENT_ID = 'af90f0a4-f6d7-483e-880e-3d2671bb991d';
+    const REDIRECT_URI = 'http://localhost:3000/auth/callback'; 
+    const AUTH_URL = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=${CLIENT_ID}&response_type=id_token&redirect_uri=${REDIRECT_URI}&scope=openid profile email&response_mode=fragment&state=12345&nonce=67890`;
+
+    document.getElementById('signin-btn').onclick = function() {
+      window.location.href = AUTH_URL;
+    };
+
+    function parseHash(hash) {
+      const params = new URLSearchParams(hash.substring(1));
+      return Object.fromEntries(params.entries());
+    }
+
+    function handleAuthCallback() {
+      const hash = window.location.hash;
+      if (hash) {
+        const params = parseHash(hash);
+        const idToken = params.id_token;
+        if (idToken) {
+          console.log('ID Token:', idToken);
+          sendIdTokenToBackend(idToken);
+        }
+      }
+    }
+
+    async function sendIdTokenToBackend(idToken) {
+      try {
+        const response = await fetch('http://localhost:3000/users/signin/microsoft', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ id_token: idToken }),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          console.log('JWT Token:', data.data); // Adjust based on your API response format
+        } else {
+          console.error('Error:', data.message);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+
+    // Handle the callback after Microsoft sign-in
+    window.onload = handleAuthCallback;
+  </script>
+</body>
+</html>

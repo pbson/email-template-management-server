@@ -1,16 +1,6 @@
 version: '3.8'
 
 services:
-  redis:
-    container_name: redis
-    image: redis:latest
-    restart: always
-    command: --port 19635
-    ports:
-      - "19635:19635"
-    volumes:
-      - redis-data:/data
-
   postgresql:
     container_name: postgresql
     image: postgres:latest
@@ -26,4 +16,3 @@ services:
 
 volumes:
   postgres-data:
-  redis-data:

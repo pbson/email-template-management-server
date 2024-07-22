@@ -1,23 +1,17 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { RedisIoAdapter } from '@modules/common/adapters/redis-io.adapter';
 import { ConfigService } from '@nestjs/config';
-import { WebsocketConfig } from '@config/types';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Logger } from 'nestjs-pino';
+import { json } from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   app.useLogger(app.get(Logger));
+  app.use(json({ limit: '50mb' }));
 
   const configService = app.get(ConfigService<unknown, true>);
-
-  const redisAdapter = new RedisIoAdapter(app);
-  await redisAdapter.connectToRedis(
-    configService.get<WebsocketConfig>('websocketConfig'),
-  );
-  app.useWebSocketAdapter(redisAdapter);
 
   if (configService.get<string>('app_env') !== 'production') {
     const config = new DocumentBuilder()
