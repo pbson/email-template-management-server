@@ -1,4 +1,4 @@
-# Bumper Cars Core Service
+# Email Management Service
 
 ## Description
 This project is the backend server for the email management dissertation project
