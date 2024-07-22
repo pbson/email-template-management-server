@@ -3,38 +3,26 @@ port: 3000
 
 database:
   type: 'postgres'
-  host: <%= process.env.DATABASE_HOST %>
+  host: 'localhost'
   port: '5432'
-  username: <%= process.env.DATABASE_USERNAME %>
-  password: <%= process.env.DATABASE_PASSWORD %>
+  username: 'postgres'
+  password: 'postgres'
   db_name: 'postgres'
 
-redis:
-  host: <%= process.env.REDIS_HOST %>
-  port: 19635
-  username: <%= process.env.REDIS_USERNAME %>
-  password: <%= process.env.REDIS_PASSWORD %>
-
-websocketConfig:
-  host: <%= process.env.REDIS_HOST %>
-  port: 19635
-  username: <%= process.env.REDIS_USERNAME %>
-  password: <%= process.env.REDIS_PASSWORD %>
-
 aws:
-  region: <%= process.env.AWS_REGION %>
-  accessKeyId: <%= process.env.AWS_ACCESS_KEY %>
-  secretAccessKey: <%= process.env.AWS_SECRET_ACCESS_KEY %>
-  platformApplicationArn: <%= process.env.AWS_PLATFORM_APPLICATION_ARN %>
+  region: 'us-west-2'
+  accessKeyId: 'fakeAccessKeyId'
+  secretAccessKey: 'fakeSecretAccessKey'
+  platformApplicationArn: 'fakePlatformApplicationArn'
 
 jwt:
-  secret: <%= process.env.JWT_SECRET %>
+  secret: 'secret'
   expireTime: '1d'
 
 smtp:
-  smtp_host: <%= process.env.SMTP_HOST %>
+  smtp_host: 'smtp.mailtrap.io'
   smtp_port: 587
   smtp_secure: 'false'
-  smtp_user: <%= process.env.SMTP_USER %>
-  smtp_pass: <%= process.env.SMTP_PASS %>
-  smtp_from: <%= process.env.SMTP_FROM %>
+  smtp_user: 'fakeUser'
+  smtp_pass: 'fakePass'
+  smtp_from: 'fakeFrom'

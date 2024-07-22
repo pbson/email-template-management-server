@@ -1,17 +1,15 @@
 # Bumper Cars Core Service
 
 ## Description
-This project is the backend server of the core service for the "Bumper Cars" game.
+This project is the backend server for the email management dissertation project
 
 ## Installation
 
 ```bash
 $ npm install
-$ npm install @nestjs-modules/mailer @nestjs/common @nestjs/core nodemailer
-
 ```
 
-## Run PostgreSQL and Redis using Docker Compose
+## Run PostgreSQL
 ```bash
 $ docker-compose up
 ```
@@ -23,9 +21,6 @@ $ npm run migration:run
 
 ## Running the app
 ```bash
-# development
-$ npm run start
-
 # watch mode
 $ npm run start:dev
 

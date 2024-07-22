@@ -7,18 +7,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/typeorm.config';
 import { DataSource } from 'typeorm';
 import { CommonModule } from './modules/common/common.module';
-import { UsersModule } from '@modules/users/users.module';
-import { RoomsModule } from '@modules/rooms/rooms.module';
-import { GamesModule } from '@modules/games/games.module';
-import { ChatsModule } from '@modules/chats/chats.module';
+import { UserModule } from '@modules/user/users.module';
 import { LoggerModule } from 'nestjs-pino';
-import { Config, RedisConfig } from '@config/types';
-import { CacheModule } from '@nestjs/cache-manager';
 import { MailerModule } from '@nestjs-modules/mailer';
-import { ResetToken } from '@modules/users/entities/reset-token.entity';
-import { ResetTokenRepository } from '@modules/users/repositories/reset-token.repository';
-import * as redisStore from 'cache-manager-redis-store';
-
+import { CaseModule } from '@modules/case/case.module';
+import { ScheduleModule } from '@modules/schedule/schedule.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -26,27 +21,15 @@ import * as redisStore from 'cache-manager-redis-store';
       isGlobal: true,
       load: [configuration],
     }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client'),
+    }),
     TypeOrmModule.forRootAsync(typeOrmConfig),
     CommonModule,
-    UsersModule,
-    RoomsModule,
-    GamesModule,
-    ChatsModule,
+    UserModule,
+    CaseModule,
+    ScheduleModule,
     LoggerModule.forRoot(),
-    CacheModule.registerAsync({
-      isGlobal: true,
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService<Config, true>) => {
-        const redisConfig = configService.get<RedisConfig>('redis');
-        return {
-          store: redisStore,
-          host: redisConfig.host,
-          port: redisConfig.port,
-          auth_pass: redisConfig.password,
-        };
-      },
-      inject: [ConfigService],
-    }),
     MailerModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
         transport: {
@@ -64,7 +47,6 @@ import * as redisStore from 'cache-manager-redis-store';
       }),
       inject: [ConfigService],
     }),
-    TypeOrmModule.forFeature([ResetToken, ResetTokenRepository]),
   ],
   controllers: [AppController],
   providers: [AppService],

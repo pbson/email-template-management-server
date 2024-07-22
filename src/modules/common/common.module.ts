@@ -6,7 +6,6 @@ import { CommonService } from './services/common.service';
 import { CommonController } from './common.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { HttpModule } from '@nestjs/axios';
-import { AppGateway } from '@modules/common/websocket.gateway';
 import { CacheModule } from '@nestjs/cache-manager';
 
 @Global()
@@ -19,8 +18,7 @@ import { CacheModule } from '@nestjs/cache-manager';
       useClass: HttpExceptionFilter,
     },
     CommonService,
-    AppGateway,
   ],
-  exports: [CommonService, AppGateway],
+  exports: [CommonService],
 })
 export class CommonModule {}
