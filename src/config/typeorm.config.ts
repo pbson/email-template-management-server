@@ -28,6 +28,9 @@ export const typeOrmConfig: TypeOrmModuleAsyncOptions = {
       extra: {
         max: 30,
         charset: 'utf8mb4_unicode_ci',
+        ssl: {
+          rejectUnauthorized: false,
+        },
       },
       synchronize: false,
       logging: false,

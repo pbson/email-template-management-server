@@ -3,26 +3,26 @@ port: 3000
 
 database:
   type: 'postgres'
-  host: 'localhost'
+  host: <%= process.env.DATABASE_HOST %>
   port: '5432'
-  username: 'postgres'
-  password: 'postgres'
+  username: <%= process.env.DATABASE_USERNAME %>
+  password: <%= process.env.DATABASE_PASSWORD %>
   db_name: 'postgres'
 
 aws:
-  region: 'us-west-2'
-  accessKeyId: 'fakeAccessKeyId'
-  secretAccessKey: 'fakeSecretAccessKey'
-  platformApplicationArn: 'fakePlatformApplicationArn'
+  region: <%= process.env.AWS_REGION %>
+  accessKeyId: <%= process.env.AWS_ACCESS_KEY %>
+  secretAccessKey: <%= process.env.AWS_SECRET_ACCESS_KEY %>
+  platformApplicationArn: <%= process.env.AWS_PLATFORM_APPLICATION_ARN %>
 
 jwt:
-  secret: 'secret'
+  secret: <%= process.env.JWT_SECRET %>
   expireTime: '1d'
 
 smtp:
-  smtp_host: 'smtp.mailtrap.io'
+  smtp_host: <%= process.env.SMTP_HOST %>
   smtp_port: 587
   smtp_secure: 'false'
-  smtp_user: 'fakeUser'
-  smtp_pass: 'fakePass'
-  smtp_from: 'fakeFrom'
+  smtp_user: <%= process.env.SMTP_USER %>
+  smtp_pass: <%= process.env.SMTP_PASS %>
+  smtp_from: <%= process.env.SMTP_FROM %>
