@@ -19,6 +19,7 @@ import { CaseResponseService } from './services/case-response.service';
 import { TagService } from './services/tag.service';
 import { VariableService } from './services/variable.service';
 import { RecentSearch } from './entities/recent-search.entity';
+import { Schedule } from '@modules/schedule/entities/schedule.entity';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { RecentSearch } from './entities/recent-search.entity';
       Variable,
       User,
       RecentSearch,
+      Schedule,
     ]),
   ],
   controllers: [
