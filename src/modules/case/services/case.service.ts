@@ -13,6 +13,8 @@ import { Tag } from '../entities/tag.entity';
 import { CaseTag } from '../entities/case-tag.entity';
 import { Advice } from '../entities/advice.entity';
 import { RecentSearch } from '../entities/recent-search.entity';
+import { CaseResponse } from '../entities/case-response.entity';
+import { Schedule } from '@modules/schedule/entities/schedule.entity';
 
 @Injectable()
 export class CaseService {
@@ -29,6 +31,10 @@ export class CaseService {
     private readonly adviceRepository: Repository<Advice>,
     @InjectRepository(RecentSearch)
     private readonly recentSearchRepository: Repository<RecentSearch>,
+    @InjectRepository(CaseResponse)
+    private readonly caseResponseRepository: Repository<CaseResponse>,
+    @InjectRepository(Schedule)
+    private readonly scheduleRepository: Repository<Schedule>,
   ) {}
 
   async getListCases(query: GetListCasesReqDTO): Promise<GetListCasesResDTO> {
@@ -195,6 +201,8 @@ export class CaseService {
     try {
       await this.caseTagRepository.delete({ case: { id: caseId } });
       await this.adviceRepository.delete({ case: { id: caseId } });
+      await this.caseResponseRepository.delete({ case: { id: caseId } });
+      await this.scheduleRepository.delete({ case: { id: caseId } });
       const result = await this.caseRepository.delete(caseId);
       if (result.affected === 0) {
         throw new ApiError(ErrorCode.NOT_FOUND);
