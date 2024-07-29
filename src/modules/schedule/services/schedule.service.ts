@@ -97,10 +97,10 @@ export class ScheduleService {
         throw new ApiError(ErrorCode.USER_NOT_FOUND);
       }
 
-      let caseEntity = undefined;
-      if (case_id) {
+      let caseEntity;
+      if (case_id && case_id !== '') {
         caseEntity = await this.caseRepository.findOne({
-          where: { id: case_id },
+          where: { id: case_id as number },
         });
         if (!caseEntity) {
           throw new ApiError(ErrorCode.CASE_NOT_FOUND);
@@ -110,7 +110,7 @@ export class ScheduleService {
       const newSchedule = this.scheduleRepository.create({
         ...scheduleData,
         user,
-        case: caseEntity,
+        case: caseEntity || undefined,
       });
 
       const savedSchedule = await this.scheduleRepository.save(newSchedule);
