@@ -50,9 +50,8 @@ export class CreateScheduleDTO {
   description?: string;
 
   @ApiProperty({ type: Number, required: false })
-  @IsInt()
   @IsOptional()
-  case_id?: number;
+  case_id?: number | string;
 
   @ApiProperty({ type: Number })
   @IsInt()
