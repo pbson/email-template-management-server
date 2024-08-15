@@ -24,6 +24,10 @@ export class Variable {
   @Column({ type: 'jsonb' })
   default_value: any;
 
+  @ApiProperty({ type: Number })
+  @Column({ type: 'boolean', default: false })
+  is_permanent: boolean;
+
   @ApiProperty({ type: Date })
   @CreateDateColumn({
     type: 'timestamp',

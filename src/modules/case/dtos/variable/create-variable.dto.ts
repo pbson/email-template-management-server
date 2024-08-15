@@ -10,4 +10,7 @@ export class CreateVariableDTO {
   @ApiProperty({ type: 'jsonb', description: 'Default value of the variable' })
   @IsNotEmpty()
   defaultValue: any;
+
+  @ApiProperty({ type: Boolean, description: 'Is the variable permanent' })
+  isPermanent: boolean;
 }

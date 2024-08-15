@@ -30,12 +30,17 @@ export class VariableService {
     }
   }
 
-  async createVariable(name: string, defaultValue: any): Promise<Variable> {
+  async createVariable(
+    name: string,
+    defaultValue: any,
+    isPermanent: boolean,
+  ): Promise<Variable> {
     try {
       const formattedName = name.replace(/\s+/g, '_');
       const newVariable = this.variableRepository.create({
         name: formattedName,
         default_value: defaultValue,
+        is_permanent: isPermanent,
       });
       return await this.variableRepository.save(newVariable);
     } catch (error) {

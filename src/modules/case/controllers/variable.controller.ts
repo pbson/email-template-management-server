@@ -64,10 +64,14 @@ export class VariableController {
     type: Variable,
   })
   async createVariable(@Body() createVariableDTO: CreateVariableDTO) {
-    const { name, defaultValue } = createVariableDTO;
+    const { name, defaultValue, isPermanent } = createVariableDTO;
     console.log('createVariableDTO', createVariableDTO);
     return new ApiResult().success(
-      await this.variableService.createVariable(name, defaultValue),
+      await this.variableService.createVariable(
+        name,
+        defaultValue,
+        isPermanent,
+      ),
     );
   }
 
