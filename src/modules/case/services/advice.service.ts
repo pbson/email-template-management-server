@@ -66,7 +66,6 @@ export class AdviceService {
         case: caseEntity,
       };
     } catch (error) {
-      console.log(error);
       throw new ApiError(ErrorCode.GENERIC_ERROR);
     }
   }

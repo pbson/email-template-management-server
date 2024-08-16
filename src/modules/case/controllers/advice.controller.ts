@@ -47,7 +47,6 @@ export class AdviceController {
   })
   @ApiParam({ name: 'caseId', type: Number })
   async getListAdvice(@Param('caseId') caseId: number, @Query() query: any) {
-    console.log('caseId', caseId);
     return new ApiResult().success(
       await this.adviceService.getListAdvices(caseId, query),
     );

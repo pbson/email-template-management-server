@@ -4,12 +4,15 @@ import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Logger } from 'nestjs-pino';
 import { json } from 'express';
+import * as csurf from 'csurf';
+import helmet from 'helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   app.useLogger(app.get(Logger));
   app.use(json({ limit: '50mb' }));
+  app.use(helmet());
 
   const configService = app.get(ConfigService<unknown, true>);
 
