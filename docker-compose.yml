@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   postgresql:
     container_name: postgresql
@@ -11,8 +10,13 @@ services:
       POSTGRES_PASSWORD: "postgres"
       POSTGRES_USER: "postgres"
       POSTGRES_DB: "postgres"
+      POSTGRES_SSL: "on"
     volumes:
       - postgres-data:/var/lib/postgresql/data
-
+      - ./ssl:/etc/postgresql/ssl
+    command: >
+      -c ssl=on
+      -c ssl_cert_file=/etc/postgresql/ssl/server.crt
+      -c ssl_key_file=/etc/postgresql/ssl/server.key
 volumes:
   postgres-data:
